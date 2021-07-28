@@ -91,7 +91,6 @@ table thead th {
   font-weight: normal;
   padding: 1rem 2rem;
   text-align: left;
-  
 }
 
 table tbody tr {
@@ -105,7 +104,6 @@ table tbody tr:hover {
 table tbody td {
   background-color: white;
   padding: 1rem 2rem;
-  
 }
 
 td.description {
