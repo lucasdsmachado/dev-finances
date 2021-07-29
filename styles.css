@@ -111,6 +111,11 @@ a:hover {
 }
 
 /*======== Table =========*/
+#transaction {
+  display: block;
+  overflow-x: auto; /* cria a rolagem do eixo X se necessário */
+}
+
 #data-table {
   width: 100%;
   border-spacing: 0 0.5rem;
