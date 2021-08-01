@@ -27,9 +27,15 @@ const transactions = [
   date: '23/01/2021'
 },
 {
-  id: 1,
+  id: 3,
   description: 'Internet',
   amount: -20000,
+  date: '23/01/2021'
+},
+{
+  id: 4,
+  description: 'App',
+  amount: 200000,
   date: '23/01/2021'
 }
 ]
@@ -52,6 +58,7 @@ const DOM = {
   addTransaction (transactions, index) {
     const tr = document.createElement('tr');
     tr.innerHTML = DOM.innerHTMLTransaction(transactions);
+    DOM.transactionsContainer.appendChild(tr)
   },
   innerHTMLTransaction(transactions) {
 
@@ -66,3 +73,6 @@ const DOM = {
     return html;
   }
 }
+
+transactions.forEach(function(transaction) { 
+  DOM.addTransaction(transaction)});
