@@ -13,42 +13,59 @@ const modal = {
   }
 }
 
-const transactions = [
-{
-  id: 1,
-  description: 'Luz',
-  amount: -50000,
-  date: '23/01/2021'
-},
-{
-  id: 2,
-  description: 'Website',
-  amount: 500000,
-  date: '23/01/2021'
-},
-{
-  id: 3,
-  description: 'Internet',
-  amount: -20000,
-  date: '23/01/2021'
-},
-{
-  id: 4,
-  description: 'App',
-  amount: 200000,
-  date: '23/01/2021'
-}
-]
-
 const transaction = {
+  all: [
+    {
+      description: 'Luz',
+      amount: -50000,
+      date: '23/01/2021'
+    },
+    {
+      description: 'Website',
+      amount: 500000,
+      date: '23/01/2021'
+    },
+    {
+      description: 'Internet',
+      amount: -20000,
+      date: '23/01/2021'
+    },
+    {
+      description: 'App',
+      amount: 200000,
+      date: '23/01/2021'
+    }
+    ],
+  add(newtransaction) {
+    transaction.all.push(newtransaction);
+    App.reload();
+  },
+
+  remove(index) {
+    transaction.all.splice(index, 1);
+    App.reload();
+  },
+
   incomes() {
-
+    let income = 0;
+    transaction.all.forEach(transaction => {
+      if(transaction.amount > 0)
+        income += transaction.amount;
+    })
+    return income;
   },
+
   expenses() {
-
+    let expense = 0;
+    transaction.all.forEach(transaction => {
+      if(transaction.amount < 0)
+        expense += transaction.amount;
+    })
+    return expense;
   },
-  total() {
 
+  total() {
+    return transaction.incomes() + transaction.expenses();
   }
 }
 
@@ -75,6 +92,22 @@ const DOM = {
     </td>
     `;
     return html;
+  },
+  updateBalance() {
+    document
+      .getElementById('incomeDisplay')
+      .innerHTML = Utils.formatCurrency(transaction.incomes());
+
+    document
+      .getElementById('expenseDisplay')
+      .innerHTML = Utils.formatCurrency(transaction.expenses());
+
+    document
+      .getElementById('totalDisplay')
+      .innerHTML = Utils.formatCurrency(transaction.total());
+  },
+  clearTransactions() {
+    DOM.transactionsContainer.innerHTML = "";
   }
 }
 
@@ -91,5 +124,23 @@ const Utils = {
   }
 }
 
-transactions.forEach(function(transaction) { 
-  DOM.addTransaction(transaction)});
+const Form = {
+  
+}
+
+const App = {
+  init() {
+    transaction.all.forEach(transaction => { 
+      DOM.addTransaction(transaction)});
+    
+    DOM.updateBalance();
+  },
+  reload() {
+    DOM.clearTransactions();
+    App.init();
+  }
+}
+
+App.init();
+
+
